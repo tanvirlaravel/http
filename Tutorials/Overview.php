@@ -23,8 +23,8 @@
             <a class="nav-link" data-toggle="pill" href="#Accessing-The-Current-Route">HTTP flow</a>
 
             <a class="nav-link" data-toggle="pill" href="#CORS">HTTP Messages</a>
-            <a class="nav-link" data-toggle="pill" href="#CORS">APIs based on HTTP</a>
-            <a class="nav-link" data-toggle="pill" href="#CORS">Conclusion</a>
+            <a class="nav-link" data-toggle="pill" href="#APIs">APIs based on HTTP</a>
+
 
 
         </div>
@@ -101,36 +101,93 @@
                 <p>HTTP cookies allow the use of stateful sessions. Using header extensibility, HTTP Cookies are added to the workflow, allowing session creation on each HTTP request to share the same context, or the same state.</p>
 
                 <h4 class="mb-4 py-2 pl-5 pr-2 bg-info d-inline-block">HTTP and connections</h4>
-                <p>nothing</p>
+                <p>Before a client and server can exchange an HTTP request/response pair, they must establish a TCP connection,</p>
 
-                <h4 class="mb-4 py-2 pl-5 pr-2 bg-info d-inline-block">HTTP is simple</h4>
-                <p>nothing</p>
-
-                <h4 class="mb-4 py-2 pl-5 pr-2 bg-info d-inline-block">HTTP is simple</h4>
-                <p>nothing</p>
-
-                <h4 class="mb-4 py-2 pl-5 pr-2 bg-info d-inline-block">HTTP is simple</h4>
-                <p>nothing</p>
-
-                <h4 class="mb-4 py-2 pl-5 pr-2 bg-info d-inline-block">HTTP is simple</h4>
-                <p>nothing</p>
-
-                <h4 class="mb-4 py-2 pl-5 pr-2 bg-info d-inline-block">HTTP is simple</h4>
-                <p>nothing</p>
 
             </div>
+
             <div class="tab-pane fade" id="Form-Method-Spoofing">
-                <h4 class="mt-5 mb-4 py-2 pl-5 pr-2 bg-info d-inline-block">Form Method Spoofing</h4>
-                <p>online examle serach</p>
+                <h4 class="mt-5 mb-4 py-2 pl-5 pr-2 bg-info d-inline-block">What can be controlled by HTTP</h4>
+                <p>Here is a list of common features controllable with HTTP.</p>
+                <ul>
+                    <li><b><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching" target="_blank">Caching</a></b> How documents are cached can be controlled by HTTP. The server can instruct proxies and clients, about what to cache and for how long. The client can instruct intermediate cache proxies to ignore the stored document.</li>
+                    <li><b>Relaxing the origin constraint</b></li>
+                    <li><b>Authentication</b></li>
+                    <li><b>Proxy and tunneling</b></li>
+                    <li><b>Sessions</b></li>
+                </ul>
             </div>
+
             <div class="tab-pane fade" id="Accessing-The-Current-Route">
-                <h4 class="mt-5 mb-4 py-2 pl-5 pr-2 bg-info d-inline-block">Accessing The Current Route</h4>
-                <p>Refer to the API documentation for both the <a href="https://laravel.com/api/7.x/Illuminate/Routing/Router.html"> underlying class</a> of the Route facade and Route instance to review all accessible methods.</p>
+                <h4 class="mt-5 mb-4 py-2 pl-5 pr-2 bg-info d-inline-block">HTTP flow</h4>
+
+                <p>When a client wants to communicate with a server, either the final server or an intermediate proxy, it performs the following steps:</p>
+                <ol>
+                    <li>Open a TCP connection: The TCP connection is used to send a request, or several, and receive an answer. The client may open a new connection, reuse an existing connection, or open several TCP connections to the servers.</li>
+                    <li>Send an HTTP message: HTTP messages (before HTTP/2) are human-readable. With HTTP/2, these simple messages are encapsulated in frames, making them impossible to read directly, but the principle remains the same. For example:
+                        <pre class="p-3 text-white-50 bg-dark">
+GET / HTTP/1.1
+Host: developer.mozilla.org
+Accept-Language: fr
+</pre>
+                    </li>
+                    <li>Read the response sent by the server, such as:
+                        <pre class="p-3 text-white-50 bg-dark">
+HTTP/1.1 200 OK
+Date: Sat, 09 Oct 2010 14:28:02 GMT
+Server: Apache
+Last-Modified: Tue, 01 Dec 2009 20:18:22 GMT
+ETag: "51142bc1-7449-479b075b2891b"
+Accept-Ranges: bytes
+Content-Length: 29769
+Content-Type: text/html
+
+&lt;!DOCTYPE html... (here comes the 29769 bytes of the requested web page)
+</pre>
+                    </li>
+                    <li>Close or reuse the connection for further requests.</li>
+                </ol>
+                <p>If HTTP pipelining is activated, several requests can be sent without waiting for the first response to be fully received. HTTP pipelining has proven difficult to implement in existing networks, where old pieces of software coexist with modern versions. HTTP pipelining has been superseded in HTTP/2 with more robust multiplexing requests within a frame.</p>
             </div>
+
             <div class="tab-pane fade" id="CORS">
-                <h4 class="mt-5 mb-4 py-2 pl-5 pr-2 bg-danger d-inline-block">Cross-Origin Resource Sharing (CORS)</h4>
-                <p></p>
+                <h4 class="mt-5 mb-4 py-2 pl-5 pr-2 bg-info d-inline-block">HTTP Messages</h4>
+                <p>There are two types of HTTP messages, requests and responses, each with its own format.</p>
+
+                <h6 class="mt-6 mb-4 py-1 pl-5 pr-2 bg-success d-inline-block">Requests</h6>
+
+                <h6 class="mt-6 mb-4 py-1 pl-5 pr-2 bg-success d-inline-block">HTTP Messages</h6>
+                <img src="img/HTTP_Request.png" alt="">
+                <p>Requests consists of the following elements:</p>
+                <ul>
+                    <li>An HTTP method, usually a verb like GET, POST or a noun like OPTIONS or HEAD that defines the operation the client wants to perform. Typically, a client wants to fetch a resource (using GET) or post the value of an HTML form (using POST), though more operations may be needed in other cases.</li>
+                    <li>The path of the resource to fetch; the URL of the resource stripped from elements that are obvious from the context, for example without the protocol (http://), the domain (here, developer.mozilla.org), or the TCP port (here, 80).</li>
+                    <li>The version of the HTTP protocol.</li>
+                    <li>Optional headers that convey additional information for the servers.</li>
+                    <li>Or a body, for some methods like POST, similar to those in responses, which contain the resource sent.</li>
+                </ul>
+
+                <h6 class="mt-6 mb-4 py-1 pl-5 pr-2 bg-success d-inline-block">Responses</h6>
+                <img src="img/HTTP_Response.png" alt="">
+                <p>Responses consist of the following elements:</p>
+                <ul>
+                    <li>Responses consist of the following elements:</li>
+                    <li>A status code, indicating if the request was successful, or not, and why.</li>
+                    <li>A status message, a non-authoritative short description of the status code.</li>
+                    <li>HTTP headers, like those for requests.</li>
+                    <li>Optionally, a body containing the fetched resource.</li>
+                </ul>
             </div>
+
+            <div class="tab-pane fade" id="APIs">
+                <h4 class="mt-5 mb-4 py-2 pl-5 pr-2 bg-info d-inline-block">APIs based on HTTP</h4>
+                <p>The most commonly used API based on HTTP is the <a href="https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest" target="_blank">XMLHttpRequest</a> API, which can be used to exchange data between a user agent and a server. The modern <a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API" target="_blank">Fetch API</a> provides the same features with a more powerful and flexible feature set.</p>
+
+                <p>Another API, <a href="https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events" target="_blank">server-sent</a> events, is a one-way service that allows a server to send events to the client, using HTTP as a transport mechanism. Using the <a href="https://developer.mozilla.org/en-US/docs/Web/API/EventSource" target="_blank">EventSource</a> interface, the client opens a connection and establishes event handlers. The client browser automatically converts the messages that arrive on the HTTP stream into appropriate <a href="https://developer.mozilla.org/en-US/docs/Web/API/Event" target="_blank">Event</a> objects, delivering them to the event handlers that have been registered for the events' <a href="https://developer.mozilla.org/en-US/docs/Web/API/Event/type" target="_blank">type</a>a> if known, or to the <a href="https://developer.mozilla.org/en-US/docs/Web/API/EventSource/onmessage" target="_blank">onmessage</a>a> event handler if no type-specific event handler was established.</p>
+            </div>
+
+
+
         </div>
     </div>
 </div>
